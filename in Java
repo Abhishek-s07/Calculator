@@ -1,0 +1,174 @@
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+ 
+public class Calculator implements ActionListener {
+    JFrame frame;
+    JTextField textfield;
+    JButton[] Nbuttons = new JButton[10];
+      JButton[] Fbuttons = new JButton[9];
+        JButton add,sub,mul,div;
+          JButton dec,equ,del,clr,neg;
+          JPanel panel;
+          Font myFont=new Font("Ink Free",Font.BOLD,30);
+          double num1=0,num2=0,result=0;
+          char operator;
+    Calculator(){
+        frame=new JFrame("Calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(420,550);
+        frame.setLayout(null);
+        textfield=new JTextField();
+        textfield.setBounds(50,25,300,50);
+        textfield.setBorder(BorderFactory.createEtchedBorder());
+        textfield.setFont(myFont);
+        textfield.setEditable(false);
+        add=new JButton("+");
+        add.setBackground(Color.yellow);
+        sub=new JButton("-");
+        sub.setBackground(Color.yellow);
+        mul=new JButton("*");
+        mul.setBackground(Color.yellow);
+        div=new JButton("/");
+        div.setBackground(Color.yellow);
+        dec=new JButton(".");
+        equ=new JButton("=");
+        del=new JButton("<-");
+        del.setBackground(Color.yellow);
+        clr=new JButton("Clr");
+        clr.setBackground(Color.yellow);
+        neg=new JButton("(-)");
+        neg.setBackground(Color.yellow);
+        
+        Fbuttons[0]=add;
+        Fbuttons[1]=sub;
+        Fbuttons[2]=mul;
+        Fbuttons[3]=div;
+        Fbuttons[4]=dec;
+        Fbuttons[5]=equ;
+        Fbuttons[6]=del;
+        Fbuttons[7]=clr;
+        Fbuttons[8]=neg;
+        for(int i=0;i<9;i++) {
+        	 Fbuttons[i].addActionListener(this);
+        	 Fbuttons[i].setFont(myFont);
+        	 Fbuttons[i].setFocusable(false);
+        }
+        for(int i=0;i<10;i++) {
+        	 Nbuttons[i]=new JButton(String.valueOf(i));
+        	 Nbuttons[i].addActionListener(this);
+        	 Nbuttons[i].setFont(myFont);
+        	 Nbuttons[i].setFocusable(false);
+        }
+        del.setBounds(150,430,100,50);
+        clr.setBounds(250,430,100,50);
+        neg.setBounds(50,430,100,50);
+        
+        
+        panel=new JPanel();
+        panel.setBounds(50,100,300, 300);
+        panel.setLayout(new GridLayout(4,4,10,10));
+        panel.add(Nbuttons[1]);
+        panel.add(Nbuttons[2]);
+        panel.add(Nbuttons[3]);
+        panel.add(Fbuttons[0]);
+        panel.add(Nbuttons[4]);
+        panel.add(Nbuttons[5]);
+        panel.add(Nbuttons[6]);
+        panel.add(Fbuttons[1]);
+        panel.add(Nbuttons[7]);
+        panel.add(Nbuttons[8]);
+        panel.add(Nbuttons[9]);
+        panel.add(Fbuttons[2]);
+        panel.add(Fbuttons[4]);
+        panel.add(Nbuttons[0]);
+        panel.add(Fbuttons[5]);
+        panel.add(Fbuttons[3]);
+        
+        frame.setTitle("CALCULATOR");
+        frame.setResizable(false);
+        frame.setLocation(600,150);
+        frame.add(neg);
+        frame.add(panel);
+        frame.add(del);
+        frame.add(clr);
+        frame.add(textfield);
+        frame.setVisible(true);
+        
+    }
+    public static void main(String[] args){
+        Calculator c=new Calculator();
+    }
+    public void actionPerformed(ActionEvent e){
+    	for(int i=0;i<10;i++) {
+    		if(e.getSource()==Nbuttons[i]) {
+    			textfield.setText(textfield.getText().concat(String.valueOf(i)));
+    		}
+    	}
+    	if(e.getSource()==dec) {
+    		textfield.setText(textfield.getText().concat("."));
+    	}
+    	if(e.getSource()==add) {
+    		num1=Double.parseDouble(textfield.getText());
+    		operator='+';
+    		textfield.setText("");
+    	}
+    	if(e.getSource()==sub) {
+    		num1=Double.parseDouble(textfield.getText());
+    		operator='-';
+    		textfield.setText("");
+    	}
+    	if(e.getSource()==mul) {
+    		num1=Double.parseDouble(textfield.getText());
+    		operator='*';
+    		textfield.setText("");
+    	}
+    	if(e.getSource()==div) {
+    		num1=Double.parseDouble(textfield.getText());
+    		operator='/';
+    		textfield.setText("");
+    	}
+    	if(e.getSource()==equ) {
+    		num2=Double.parseDouble(textfield.getText());
+    		 switch(operator) {
+    		 case '+':
+    			 result=num1+num2;
+    			 break;
+    		 case '-':
+    			 result=num1-num2;
+    			 break;
+    		 case '*':
+    			 result=num1*num2;
+    			 break;
+    		 case '/':
+    			 result=num1/num2;
+    			 break;
+    		 }
+    		 textfield.setText(String.valueOf(result));
+    		 num1=result;
+    	}
+    	if(e.getSource()==clr) {
+    		 
+    		textfield.setText("");
+    	}
+    	if(e.getSource()==del) {
+   		 String str=textfield.getText();
+   		 textfield.setText("");
+   		 for(int i=0;i<str.length()-1;i++) {
+   			textfield.setText(textfield.getText()+str.charAt(i)); 
+   		 }
+    		 
+    	}
+    	if(e.getSource()==neg) {
+    		  double temp=Double.parseDouble(textfield.getText());
+    		  temp*=-1;
+    		  textfield.setText(String.valueOf(temp));
+    		 }
+        
+        
+    }
+ 
+    
+}
